@@ -37,6 +37,12 @@ class BlogPostsController < ApplicationController
     end
   end
 
+  def destroy
+    @blog_post = BlogPost.find(params[:id])
+    @blog_post.destroy # IN tutorial said this dont fail this should work , always destroy should work ...
+    redirect_to root_path
+  end
+  
   private
 
   def blog_post_params
