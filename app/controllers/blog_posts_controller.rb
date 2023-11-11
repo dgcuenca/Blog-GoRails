@@ -1,12 +1,14 @@
 class BlogPostsController < ApplicationController
+  #can use exept or only 
+  before_action :set_blog_post, except: [:index, :new, :create] #only: [:show, :edit, :update, :destroy]
+
   def index
     #instance variable are used because rails can use these in .erb template
     @blog_posts = BlogPost.all
   end
 
   def show
-    @blog_post = BlogPost.find(params[:id])
-    #redirect when a post with a specific id was not found
+  #redirect when a post with a specific id was not found
   rescue ActiveRecord::RecordNotFound
     redirect_to root_path
   end
@@ -25,11 +27,9 @@ class BlogPostsController < ApplicationController
   end
 
   def edit
-    @blog_post = BlogPost.find(params[:id])
   end
 
   def update
-    @blog_post = BlogPost.find(params[:id])
     if @blog_post.update(blog_post_params)
       redirect_to @blog_post
     else
@@ -38,14 +38,17 @@ class BlogPostsController < ApplicationController
   end
 
   def destroy
-    @blog_post = BlogPost.find(params[:id])
     @blog_post.destroy # IN tutorial said this dont fail this should work , always destroy should work ...
     redirect_to root_path
   end
-  
+
   private
 
   def blog_post_params
     params.require(:blog_post).permit(:title, :body)
+  end
+
+  def set_blog_post
+    @blog_post = BlogPost.find(params[:id])
   end
 end
