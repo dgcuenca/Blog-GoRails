@@ -8,4 +8,16 @@ class BlogPost < ApplicationRecord
   #If not Time.current is going to take the value of the first query and dont change after that
   scope :published, -> { where("published_at <= ?", Time.current) }
   scope :scheduled, -> { where("published_at > ?", Time.current) }
+
+  def draft?
+    published_at.nil?
+  end
+
+  def published?
+    published_at? && published_at <= Time.current
+  end
+
+  def schedule?
+    published_at? && published_at > Time.current
+  end
 end
