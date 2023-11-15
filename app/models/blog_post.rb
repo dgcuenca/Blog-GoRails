@@ -1,6 +1,9 @@
 class BlogPost < ApplicationRecord
   validates :title, presence: true
   validates :body, presence:true
+  
+  # if some post has same date of publish then sorted by update
+  scope :sorted, -> { order(published_at: :desc, update_at: :desc) }
 
   # scope enable to use BlogPost.draft 
   scope :draft, -> { where(published_at: nil) }
@@ -9,6 +12,7 @@ class BlogPost < ApplicationRecord
   scope :published, -> { where("published_at <= ?", Time.current) }
   scope :scheduled, -> { where("published_at > ?", Time.current) }
 
+  # helper methods to be use in view templates
   def draft?
     published_at.nil?
   end
