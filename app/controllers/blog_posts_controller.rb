@@ -4,7 +4,7 @@ class BlogPostsController < ApplicationController
 
   def index
     #instance variable are used because rails can use these in .erb template
-    @blog_posts = BlogPost.all
+    @blog_posts = BlogPost.published
   end
 
   def show
@@ -49,6 +49,6 @@ class BlogPostsController < ApplicationController
   end
 
   def set_blog_post
-    @blog_post = BlogPost.find(params[:id])
+    @blog_post = user_signed_in? ? BlogPost.find(params[:id]) : BlogPost.published.find(params[:id])
   end
 end
