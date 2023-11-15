@@ -4,7 +4,7 @@ class BlogPostsController < ApplicationController
 
   def index
     #instance variable are used because rails can use these in .erb template
-    @blog_posts = BlogPost.published
+    @blog_posts = user_signed_in? ? BlogPost.all : BlogPost.published
   end
 
   def show
