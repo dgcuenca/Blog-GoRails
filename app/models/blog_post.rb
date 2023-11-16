@@ -2,7 +2,7 @@ class BlogPost < ApplicationRecord
   has_rich_text :content
 
   validates :title, presence: true
-  validates :body, presence:true
+  validates :content, presence:true
   
   # if some post has same date of publish then sorted by update
   scope :sorted, -> { order(arel_table[:published_at].desc.nulls_last).order(updated_at: :desc)}
