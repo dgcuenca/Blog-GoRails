@@ -5,7 +5,7 @@ class BlogPost < ApplicationRecord
   validates :content, presence:true
   
   # if some post has same date of publish then sorted by update
-  scope :sorted, -> { order(arel_table[:published_at].desc.nulls_last).order(updated_at: :desc)}
+  scope :sorted, -> { order(arel_table[:published_at].desc.nulls_first).order(updated_at: :desc)}
 
   # scope enable to use BlogPost.draft 
   scope :draft, -> { where(published_at: nil) }
