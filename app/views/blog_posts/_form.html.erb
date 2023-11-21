@@ -15,10 +15,13 @@
   <div>
     <%= form.label :cover_image %>
     <% if blog_post.cover_image.present? %>
-      <%= image_tag blog_post.cover_image, class: "w-1/3"%>
-      <%# link_to normally has to be a button but since we are already inside a form we can not have a form inside a form or the browser is going to fix the issue%>
-      <%# we have to conver into a form with a delete request using JS so when click we are not going to navigate and istead delete request%>
-      <%= link_to "Remove cover image", blog_post_cover_image_path(blog_post), data: { turbo_method: :delete, turbo_confirm: "Are you sure?"} %>
+      <%# To not lose other simultaneous changes in the post and only delete the cover image when click delete %>
+      <div id="<%= dom_id(blog_post, :cover_image) %>">
+        <%= image_tag blog_post.cover_image, class: "w-1/3"%>
+        <%# link_to normally has to be a button but since we are already inside a form we can not have a form inside a form or the browser is going to fix the issue%>
+        <%# we have to conver into a form with a delete request using JS so when click we are not going to navigate and istead delete request%>
+        <%= link_to "Remove cover image", blog_post_cover_image_path(blog_post), data: { turbo_method: :delete, turbo_confirm: "Are you sure?"} %>
+      </div>
     <% end %>
     <%= form.file_field :cover_image %>
   </div>
