@@ -11,7 +11,11 @@ Rails.application.routes.draw do
   # get "/blog_posts/:id/edit", to: "blog_posts#edit", as: :edit_blog_post
   # post "/blog_posts", to: "blog_posts#create", as: :blog_posts #rails looks for a plural version when try to find a @blog_post without id
 
-  resources :blog_posts
+  resources :blog_posts do
+    # note is singular resource
+    resource :cover_image, only: [:destroy], module: :blog_posts #module change the url path to add blog post at the beginning of the path and the controller action
+    #module basic help organized a little better controllers
+  end
 
   # Defines the root path route ("/")
   root "blog_posts#index"
