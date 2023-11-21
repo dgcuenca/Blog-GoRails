@@ -6,6 +6,12 @@ class BlogPostsController < ApplicationController
     #instance variable are used because rails can use these in .erb template
     @blog_posts = user_signed_in? ? BlogPost.sorted : BlogPost.published.sorted
     @pagy, @blog_posts = pagy(@blog_posts)
+  rescue Pagy::OverflowError
+    redirect_to root_path(page: 1)
+    #another way using ruby but not so good maybe in another situation
+    #params [:page] = 1
+    #retry call again the method index but rendering page 1
+    #retry
   end
 
   def show
@@ -46,7 +52,7 @@ class BlogPostsController < ApplicationController
   private
 
   def blog_post_params
-    params.require(:blog_post).permit(:title, :content, :published_at)
+    params.require(:blog_post).permit(:title, :content, :cover_image, :published_at)
   end
 
   def set_blog_post
