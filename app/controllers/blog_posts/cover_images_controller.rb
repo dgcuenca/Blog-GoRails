@@ -1,4 +1,4 @@
-class BlogPosts::CoverImages < ApplicationController
+class BlogPosts::CoverImagesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_blog_post
 
@@ -10,6 +10,6 @@ class BlogPosts::CoverImages < ApplicationController
   private
 
   def set_blog_post
-    @blog_post = BlogPosts.find(params[:blog_post_id])# here is not only id because is nested in any case you can always check how find correctly using rails routes
+    @blog_post = BlogPost.find(params[:blog_post_id])# here is not only id because is nested in any case you can always check how find correctly using rails routes
   end
 end
